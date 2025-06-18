@@ -1,0 +1,29 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+header {
+  background-color: #2d6cdf;
+  padding: 10px 0;
+}
+.menu {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin: 0;
+  padding: 0;
+}
+.menu li a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+}
+.menu li a:hover {
+  text-decoration: underline;
+}
+main {
+  padding: 20px;
+  text-align: center;
+}
