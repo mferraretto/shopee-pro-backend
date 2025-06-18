@@ -37,4 +37,3 @@ Conteúdo HTML: ${conteudo.slice(0, 4000)}`;
 }
 
 module.exports = { auditarAnuncio };
-
