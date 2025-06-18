@@ -30,10 +30,4 @@ Conteúdo HTML: ${conteudo.slice(0, 4000)}`;
     temperature: 0.7,
   });
 
-  return {
-    nota: "🔎 IA processou",
-    feedback: resposta.choices[0].message.content.trim()
-  };
-}
-
-module.exports = { auditarAnuncio };
+  ret
