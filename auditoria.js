@@ -1,11 +1,10 @@
 const puppeteer = require("puppeteer");
-const { Configuration, OpenAIApi } = require("openai");
+const OpenAI = require("openai");
 
-// Configuração da API OpenAI
-const configuration = new Configuration({
+const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
-const openai = new OpenAIApi(configuration);
+
 
 async function auditarAnuncio(url) {
   const browser = await puppeteer.launch({
