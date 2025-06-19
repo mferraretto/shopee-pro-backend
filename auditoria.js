@@ -1,4 +1,4 @@
-const puppeteer = require("puppeteer");
+const { chromium } = require("playwright");
 const OpenAI = require("openai");
 
 const openai = new OpenAI({
@@ -6,15 +6,11 @@ const openai = new OpenAI({
 });
 
 async function auditarAnuncio(url) {
-  const browser = await puppeteer.launch({
-    headless: "new",
-    args: ["--no-sandbox", "--disable-setuid-sandbox"]
-  });
-
+  const browser = await chromium.launch({ headless: true });
   const page = await browser.newPage();
-  await page.goto(url, { waitUntil: "networkidle2", timeout: 60000 });
+  await page.goto(url, { waitUntil: "domcontentloaded", timeout: 60000 });
 
-  const titulo = await page.$eval("title", el => el.textContent);
+  const titulo = await page.title();
   const conteudo = await page.content();
 
   await browser.close();
