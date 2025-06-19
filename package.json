@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
     "build": "npx playwright install --with-deps"
   },
   "dependencies": {
@@ -13,6 +13,7 @@
     "express": "^4.21.2",
     "firebase": "^11.9.1",
     "openai": "^5.5.1",
-    "playwright": "^1.53.1"
+    "playwright": "^1.43.1"
   }
 }
+
