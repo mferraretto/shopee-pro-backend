@@ -4,8 +4,10 @@ const { auditarAnuncio } = require('./auditoria');
 
 const app = express();
 
-// Habilita CORS com configurações padrão
-app.use(cors());
+// ✅ Habilita CORS apenas para seu domínio do GitHub Pages
+app.use(cors({
+  origin: "https://mferraretto.github.io"
+}));
 
 // Permite receber JSON no corpo das requisições
 app.use(express.json());
