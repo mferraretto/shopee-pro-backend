@@ -8,7 +8,6 @@ const openai = new OpenAI({
 async function auditarAnuncio(url) {
   const browser = await puppeteer.launch({
     headless: "new",
-executablePath: "/usr/bin/chromium",
     args: ["--no-sandbox", "--disable-setuid-sandbox"]
   });
 
