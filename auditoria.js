@@ -33,7 +33,7 @@ Conteúdo HTML: ${conteudo.slice(0, 4000)}`;
 
   ret
 
-  const browser = await puppeteer.launch({ headless: "new" });
+const browserInstance = await puppeteer.launch({ headless: "new" });
   const page = await browser.newPage();
   await page.goto(url, { waitUntil: "networkidle2", timeout: 60000 });
 
