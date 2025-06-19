@@ -6,7 +6,12 @@ const openai = new OpenAI({
 });
 
 async function auditarAnuncio(url) {
-  const browser = await puppeteer.launch({ headless: "new" });
+  const browser = await puppeteer.launch({
+    headless: "new",
+    executablePath: puppeteer.executablePath(),
+    args: ["--no-sandbox", "--disable-setuid-sandbox"]
+  });
+
   const page = await browser.newPage();
   await page.goto(url, { waitUntil: "networkidle2", timeout: 60000 });
 
@@ -19,7 +24,7 @@ async function auditarAnuncio(url) {
 Título: ${titulo}
 Conteúdo HTML: ${conteudo.slice(0, 4000)}`;
 
-  const resposta = await openai.createChatCompletion({
+  const resposta = await openai.chat.completions.create({
     model: "gpt-3.5-turbo",
     messages: [{ role: "user", content: prompt }],
     temperature: 0.7,
@@ -27,8 +32,9 @@ Conteúdo HTML: ${conteudo.slice(0, 4000)}`;
 
   return {
     nota: "🔎 IA processou",
-    feedback: resposta.data.choices[0].message.content.trim()
+    feedback: resposta.choices[0].message.content.trim()
   };
 }
 
 module.exports = { auditarAnuncio };
+
