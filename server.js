@@ -8,7 +8,7 @@ app.use(express.json());
 
 app.post('/auditar', async (req, res) => {
   const { url } = req.body;
-  if (!url || !url.includes("shopee.com.br/product")) {
+  if (!url || !url.includes("shopee.com.br/")) {
     return res.status(400).json({ erro: "URL inválida." });
   }
 
