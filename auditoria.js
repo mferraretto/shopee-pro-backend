@@ -1,22 +1,34 @@
-import { auth, db } from './firebase-init.js';
-import { addDoc, collection, Timestamp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+const puppeteer = require("puppeteer");
+const OpenAI = require("openai");
 
-let uid = "";
-onAuthStateChanged(auth, (user) => {
-  if (!user) return window.location.href = "index.html";
-  uid = user.uid;
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
 });
 
-window.registrarAnalise = async function () {
-  const input = document.getElementById("input-anuncio").value;
-  if (!input || !uid) return;
+async function auditarAnuncio(url) {
+  const browser = await puppeteer.launch({ headless: "new" });
+  const page = await browser.newPage();
+  await page.goto(url, { waitUntil: "networkidle2", timeout: 60000 });
 
-  await addDoc(collection(db, "analises"), {
-    anuncio: input,
-    usuarioId: uid,
-    data: Timestamp.now()
+  const titulo = await page.$eval("title", el => el.textContent);
+  const conteudo = await page.content();
+
+  await browser.close();
+
+  const prompt = `Analise o seguinte anúncio Shopee e dê uma nota de 0 a 10, com sugestões para melhorar:
+Título: ${titulo}
+Conteúdo HTML: ${conteudo.slice(0, 4000)}`;
+
+  const resposta = await openai.createChatCompletion({
+    model: "gpt-3.5-turbo",
+    messages: [{ role: "user", content: prompt }],
+    temperature: 0.7,
   });
 
-  document.getElementById("resposta").innerText = "Análise registrada!";
+  return {
+    nota: "🔎 IA processou",
+    feedback: resposta.data.choices[0].message.content.trim()
+  };
 }
+
+module.exports = { auditarAnuncio };
