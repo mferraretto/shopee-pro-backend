@@ -4,8 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-  "build": "npx playwright install chromium",
-  "start": "node server.js"
+    "build": "npx playwright install chromium",
+    "start": "node server.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -13,7 +13,6 @@
     "express": "^4.21.2",
     "firebase": "^11.9.1",
     "openai": "^5.5.1",
-    "playwright": "^1.53.1",
-    "playwright-core": "^1.43.1"
+    "playwright": "^1.43.1"
   }
 }
